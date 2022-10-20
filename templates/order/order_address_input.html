@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>お届け先入力 | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<!-- メインビジュアル -->
+				<section class="module bg-dark-30" data-background="">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h1 class="module-title font-alt mb-0">Address Form</h1>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 会員詳細 -->
+				<section class="module">
+					<div class="container">
+						<div class="col-sm-6 col-sm-offset-3 mb-sm-40">
+							<h4 class="font-alt">お届け先入力</h4>
+							<hr class="divider-w mb-20">
+							<form method="post" th:action="@{/payment/input}" th:object="${addressForm}">
+								<ul class="list-unstyled mb-40">
+									<li class="form-group" th:classappend="${#fields.hasErrors('postalCode')} ? 'has-error'">
+										<span>郵便番号</span><br>
+										<input class="form-control" type="text" name="postalCode" th:value="${addressForm.postalCode}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+										<span>住所</span><br>
+										<input class="form-control" type="text" name="address" th:value="${addressForm.address}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error'">
+										<span>氏名</span><br>
+										<input class="form-control" type="text" name="name" th:value="${addressForm.name}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'has-error'">
+										<span>電話番号</span><br>
+										<input class="form-control" type="text" name="phoneNumber" th:value="${addressForm.phoneNumber}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+									</li>
+								</ul>
+								<div class="col-sm-3">
+									<input class="btn btn-round btn-b" type="submit" value="次へ"/>
+									<input type="hidden" name="backFlg" value="false"/>
+								</div>
+							</form>
+							<div class="col-sm-3">
+								<form th:action="@{/basket/list}">
+									<input class="btn btn-round btn-g" type="submit" value="戻る"/>
+								</form>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>

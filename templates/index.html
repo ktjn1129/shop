@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>トップページ | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<!-- メインビジュアル -->
+				<section class="module bg-dark-60 shop-page-header" data-background="">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h2 class="module-title font-alt">Our Products</h2>
+								<div class="module-subtitle font-serif"></div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 検索バー -->
+				<section class="module-extra-small mt-20 mb-20">
+					<div class="container">
+						<div class="row">
+							<form th:action="@{/item/list(sortType=${sortType}, categoryId=${categoryId})}">
+								<div class="col-sm-2 mb-sm-20">
+									<select class="form-control" name="sortType">
+										<option value="1" th:selected="${selectedSort == 1}">新着順</option>
+										<option value="2" th:selected="${selectedSort == 2}">人気順</option>
+									</select>
+								</div>
+								<div class="col-sm-3 mb-sm-20">
+									<select class="form-control" name="categoryId">
+										<option value="0" th:selected="${selectedCategory == 0}">全商品</option>
+										<option th:each="category: ${categories}" th:value="${category.id}" 
+											th:text="${category.name}" th:selected="${category.id == selectedCategory}"></option>
+									</select>
+								</div>
+								<div class="col-sm-2 mb-sm-20">
+									 <input class="btn btn-block btn-round btn-g" type="submit" value="表示"/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</section>
+				<!-- 商品一覧 -->
+				<hr class="divider-w">
+				<section class="module-extra-small mt-20 mb-20">
+					<div class="container">
+						<div class="row multi-columns-row mt-20">
+							<div class="col-sm-6 col-md-3 col-lg-3" th:each="item: ${itemList}">
+								<div class="shop-item">
+									<div class="shop-item-image">
+										<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image} != null" />
+										<img th:src="@{/images/no_image.jpg}" th:if="${item.image} == null" />
+										<div class="shop-item-detail">
+											<form method="post" th:action="@{/basket/add}" th:if="${item.stock >= 1}">
+												<input type="hidden" name="id" th:value="${item.id}" />
+												<input class="btn btn-round btn-b" type="submit" value="カートに追加"/>
+											</form>
+										</div>
+									</div>
+									<h4 class="shop-item-title font-alt"><a th:href="@{/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></h4>
+									&yen; <span th:text="${item.price}"></span>
+								</div>
+							</div>
+						</div>
+						<!-- ページング -->
+						<div class="row">
+							<nav class="col-sm-12">
+								<ul class="pagination font-alt" th:if="${selectedSort == null}">
+									<li th:if="${firstPage} > 1" class="page-item ">
+										<a class="page-link" th:href="@{?page = 1}" tabindex="-2">&laquo;</a>
+									</li>
+									<li th:if="${page} > 1" class="page-item ">
+										<a class="page-link" th:href="@{'?page=' + ${page - 1}}" tabindex="-1">前へ</a>
+									</li>
+									<th:block th:if="${lastPage} <= 0">
+										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${firstPage}">
+											<a class="page-link" th:href="@{'?page=' + ${i}}" th:text="${i}"></a>
+										</li>
+									</th:block>
+									<th:block th:if="${lastPage} > 0">
+										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${#numbers.sequence(firstPage, lastPage)}">
+											<a class="page-link" th:href="@{'?page=' + ${i}}" th:text="${i}"></a>
+										</li>
+									</th:block>
+									<li th:if="${page} < ${totalPage}" class="page-item ">
+										<a class="page-link" th:href="@{'?page=' + ${page + 1}}">次へ</a>
+									</li>
+									<li th:if="${lastPage} < ${totalPage}" class="page-item ">
+										<a class="page-link" th:href="@{'?page=' + ${totalPage}}">&raquo;</a>
+									</li>
+								</ul>
+								<ul class="pagination font-alt" th:if="${selectedSort != null}">
+									<li th:if="${firstPage} > 1" class="page-item ">
+										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
+										 + '&categoryId=' + ${selectedCategory} + '&page = 1'}" tabindex="-2">&laquo;</a>
+									</li>
+									<li th:if="${page} > 1" class="page-item ">
+										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
+										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page - 1}}" tabindex="-1">前へ</a>
+									</li>
+									<th:block th:if="${lastPage} <= 0">
+										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${firstPage}">
+											<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
+											 + '&categoryId=' + ${selectedCategory} + '&page=' + ${i}}" th:text="${i}"></a>
+										</li>
+									</th:block>
+									<th:block th:if="${lastPage} > 0">
+										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${#numbers.sequence(firstPage, lastPage)}">
+											<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
+											 + '&categoryId=' + ${selectedCategory} + '&page=' + ${i}}" th:text="${i}"></a>
+										</li>
+									</th:block>
+									<li th:if="${page} < ${totalPage}" class="page-item ">
+										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
+										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page + 1}}">次へ</a>
+									</li>
+									<li th:if="${lastPage} < ${totalPage}" class="page-item ">
+										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
+										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${totalPage}}">&raquo;</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</section>
+	        </div>
+	    </main>
+	</body>
+</html>

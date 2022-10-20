@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(body)">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>The Shop</title>
+		<!-- Stylesheet -->
+		<link th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+		<link th:href="@{/lib/animate.css/animate.css}" rel="stylesheet">
+		<link th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+		<link th:href="@{/lib/et-line-font/et-line-font.css}" rel="stylesheet">
+		<link th:href="@{/lib/flexslider/flexslider.css}" rel="stylesheet">
+		<link th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}" rel="stylesheet">
+		<link th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}" rel="stylesheet">
+		<link th:href="@{/lib/magnific-popup/dist/magnific-popup.css}" rel="stylesheet">
+		<link th:href="@{/lib/simple-text-rotator/simpletextrotator.css}" rel="stylesheet">
+		<link th:href="@{/css/style.css}" rel="stylesheet">
+		<link id="color-scheme" th:href="@{/css/colors/default.css}" rel="stylesheet">
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+		 	<!-- ヘッダー（ナビゲーションバー） -->
+		 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+		 		<div th:replace="~{common/header :: layout-header}"></div>
+		 	</nav>
+		 	<!-- メイン -->
+			<div class="main">
+				<div th:replace="${body}"></div>
+			</div>
+			<!-- フッター -->
+			<div>
+				<div th:replace="~{common/footer :: layout-footer}"></div>
+			</div>
+		</main>
+		<!-- JavaScript -->
+		<script th:src="@{/lib/jquery/dist/jquery.js}"></script>
+		<script th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}"></script>
+		<script th:src="@{/lib/wow/dist/wow.js}"></script>
+		<script th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}"></script>
+		<script th:src="@{/lib/isotope/dist/isotope.pkgd.js}"></script>
+		<script th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}"></script>
+		<script th:src="@{/lib/flexslider/jquery.flexslider.js}"></script>
+		<script th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}"></script>
+		<script th:src="@{/lib/smoothscroll.js}"></script>
+		<script th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}"></script>
+		<script th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}"></script>
+		<script th:src="@{/js/plugins.js}"></script>
+		<script th:src="@{/js/main.js}"></script>
+	</body>
+</html>

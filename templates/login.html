@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ログイン | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<!-- メインビジュアル -->
+				<section class="module bg-dark-30" data-background="">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h1 class="module-title font-alt mb-0">Login</h1>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- ログインフォーム -->
+				<section class="module">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-4 col-sm-offset-4 mb-sm-40">
+								<h4 class="font-alt">ログイン</h4>
+								<hr class="divider-w mb-20">
+								<div class="alert alert-danger" role="alert" th:if="${error}">
+									<p th:text="${error}"></p>
+								</div>
+								<form class="form" method="post" th:action="@{/login}" th:object="${loginForm}">
+									<div class="form-group">
+										<input class="form-control" type="text" name="email" placeholder="Email" th:field="*{email}"/>
+									</div>
+									<div class="form-group">
+										<input class="form-control" type="password" name="password" placeholder="パスワード" th:field="*{password}"/>
+									</div>
+									<div class="form-group mt-20">
+										<input  class="btn btn-round btn-b" type="submit" value="ログイン">
+									</div>
+								</form>
+								<p class="mt-20">※初めての方は、 <span><a th:href="@{/user/regist/input}">アカウントを作成</a></span> してください。</p>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>

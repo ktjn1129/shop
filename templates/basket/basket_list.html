@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ショッピングカート | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<section class="module">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h1 class="module-title font-alt">ショッピングカート</h1>
+							</div>
+						</div>
+						<hr class="divider-w pt-20">
+						<div class="row">
+							<div class="col-sm-12">
+								<div th:if="${#lists.isEmpty(basketList)}">
+									<h5>現在、お客様の買い物かごには商品がありません。商品をお選びください。</h5>
+								</div>
+								<div th:each="basketItem: ${basketList}">
+									<div th:if="${basketItem.stock == 0}">
+										<div class="alert alert-danger" role="alert">
+											<p th:text="|※${basketItem.name}は在庫切れです。ほかの商品を選択してください。|"></p>
+										</div>
+									</div>
+									<div th:if="${basketItem.stock <= basketItem.orderNum}">
+										<div class="alert alert-danger" role="alert">
+											<p th:text="|※${basketItem.name}は在庫不足のため、数を増やすことができません。|"></p>
+										</div>
+									</div>
+								</div>
+								<table class="table table-striped table-border checkout-table" th:if="!${#lists.isEmpty(basketList)}">
+									<tbody>
+										<tr>
+											<th></th>
+											<th>商品名</th>
+											<th>価格</th>
+											<th>数量</th>
+											<th>小計</th>
+										</tr>
+										<tr th:each="basketItem: ${basketList}">
+											<td>
+												<a th:href="@{/item/detail/{id}(id=${basketItem.id})}">
+													<img th:src="@{/images/{image}(image=${basketItem.image})}" th:if="${basketItem.image} != null"/>
+													<img th:src="@{/images/no_image.jpg}" th:if="${basketItem.image} == null"/>
+												</a>
+											</td>
+											<td>
+												<a th:href="@{/item/detail/{id}(id=${basketItem.id})}">
+													<h5 class="product-title font-alt" th:text="${basketItem.name}"></h5>
+												</a>
+											</td>
+											<td>
+												<h5 class="product-title font-alt">&yen; <span th:text="${basketItem.price}"></span></h5>
+											</td>
+											<td class="col-sm-3">
+												<div class="col-sm-3">
+													<form method="post" th:action="@{/basket/delete}">
+														<input type="hidden" name="id" th:value="${basketItem.id}" />
+														<input class="btn btn-border-d btn btn-xs" type="submit" value="－"/>
+													</form>
+												</div>
+												<div class="col-sm-2">
+													<h5 class="product-title font-alt" th:text="${basketItem.orderNum}"></h5>
+												</div>
+												<div class="col-sm-0">
+													<form method="post" th:action="@{/basket/add}">
+														<input type="hidden" name="id" th:value="${basketItem.id}" />
+														<input class="btn btn-border-d btn-xs" type="submit" value="＋"/>
+													</form>
+												</div>
+											</td>
+											<td>
+												<h5 class="product-title font-alt">&yen; <span th:text="${basketItem.price * basketItem.orderNum}"></span></h5>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mt-40">
+							<div class="col-sm-7 col-sm-offset-6" th:if="!${#lists.isEmpty(basketList)}">
+								<div th:if="${session.user != null}">
+									<form class="col-sm-5" method="post" th:action="@{/address/input}">
+										<input type="hidden" name="id" th:value="${session.user.id}" />
+										<input type="hidden" name="backFlg" th:value="false" />
+										<input class="btn btn-lg btn-block btn-round btn-d" type="submit" value="ご注文のお手続き"/>
+									</form>
+									<form class="col-sm-5" method="post" th:action="@{/basket/deleteAll}">
+										<input class="btn btn-lg btn-block btn-round btn-g" type="submit" value="買い物を空にする"/>
+									</form>
+								</div>
+								<div th:if="${session.user == null}">
+									<div class="col-sm-5 font-alt">
+										<button type="button" class="btn btn-lg btn-block btn-round btn-d" data-toggle="modal"
+											data-target="#modal"  data-backdrop="false">ご注文のお手続き</button>
+										<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+ 													<div class="modal-header">
+														<h5 class="modal-title mt-20">ログイン確認</h5>
+													</div>
+													<div class="modal-body">
+														<label>ご注文のお手続きへ進むにはログインしてください。</label>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+														<button type="button" class="btn btn-g"><a th:href="@{/login}">ログイン画面へ</a></button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<form class="col-sm-5" method="post" th:action="@{/basket/deleteAll}">
+										<input class="btn btn-lg btn-block btn-round btn-g" type="submit" value="買い物を空にする"/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>

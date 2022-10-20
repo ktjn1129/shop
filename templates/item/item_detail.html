@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>商品詳細 | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<section class="module">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 mb-sm-40 mt-20">
+								<div class="gallery">
+									<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image} != null"/>
+									<img th:src="@{/images/no_image.jpg}" th:if="${item.image} == null"/>
+								</div>
+							</div>
+							<div class="col-sm-6 mt-20">
+								<div class="row">
+									<div class="col-sm-12">
+										<h1 class="product-title font-alt" th:text="${item.name}"></h1>
+									</div>
+								</div>
+								<div class="row mb-20">
+									<div class="col-sm-12">
+										<div class="price font-alt"><span class="amount">&yen; </span><span class="amount" th:text="${item.price}"></span></div>
+									</div>
+								</div>
+								<div class="row mb-20">
+									<div class="col-sm-12">
+										<div class="description">
+											<h5 class="font-alt" th:text="${item.description}"></h5>
+										</div>
+									</div>
+								</div>
+								<div class="row mb-40">
+									<div class="col-sm-8">
+										<div class="mb-10" th:if="${session.user != null}">
+											<form method="post" th:action="@{/like/add}">
+												<input type="hidden" name="id" th:value="${item.id}" />
+												<input class="btn btn-lg btn-block btn-round btn-g" type="submit" value="お気に入りに追加">
+											</form>
+										</div>
+										<div class="mb-10" th:if="${session.user == null}">
+											<button type="button" class="btn btn-lg btn-block btn-round btn-g" data-toggle="modal"
+												data-target="#modal"  data-backdrop="false">お気に入りに追加</button>
+											<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+	 													<div class="modal-header">
+															<h5 class="modal-title mt-20">ログイン確認</h5>
+														</div>
+														<div class="modal-body">
+															<label>商品をお気に入りに追加するにはログインしてください。</label>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+															<button type="button" class="btn btn-g"><a th:href="@{/login}">ログイン画面へ</a></button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-8">
+										<form method="post" th:action="@{/basket/add}" th:if="${item.stock >= 1}">
+											<input type="hidden" name="id" th:value="${item.id}" />
+											<input class="btn btn-lg btn-block btn-round btn-b" type="submit" value="カートに追加"/>
+										</form>
+										<div th:if="${item.stock == 0}">
+											<h4>こちらの商品は在庫切れです。</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+	    </main>
+	</body>
+</html>

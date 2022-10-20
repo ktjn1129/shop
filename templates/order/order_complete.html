@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ご注文完了 | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<!-- メインビジュアル -->
+				<section class="module bg-dark-30" data-background="">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h1 class="module-title font-alt mb-0">Order</h1>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 会員登録完了 -->
+				<section class="module">
+					<div class="container">
+						<div class="col-sm-6 col-sm-offset-3 mb-sm-40">
+							<h4 class="font-alt">ご注文完了</h4>
+							<hr class="divider-w mb-20">
+							<p class="mt-40">お手続きが完了致しました。</p>
+							<p class="mt-40">ご注文ありがとうございました。</p>
+							<p class="mt-40"><a th:href="@{/}">トップへ戻る</a></p>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>退会 | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<!-- メインビジュアル -->
+				<section class="module bg-dark-30" data-background="">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h1 class="module-title font-alt mb-0">Account</h1>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 会員削除確認 -->
+				<section class="module">
+					<div class="container">
+						<div class="col-sm-6 col-sm-offset-3 mb-sm-40">
+							<h4 class="font-alt">退会</h4>
+							<hr class="divider-w mb-20">
+							<p class="mb-20">以下のアカウントを削除します。</p>
+							<ul class="list-unstyled">
+								<li class="mb-20">
+									<span>メールアドレス</span><br>
+									<span th:text="${user.email}"></span>
+								</li>
+								<li class="mb-20">
+									<span>氏名</span><br>
+									<span th:text="${user.name}"></span>
+								</li>
+								<li class="mb-20">
+									<span>郵便番号</span><br>
+									<span th:text="${user.postalCode}"></span>
+								</li>
+								<li class="mb-20">
+									<span>住所</span><br>
+									<span th:text="${user.address}"></span>
+								</li>
+								<li class="mb-20">
+									<span>電話番号</span><br>
+									<span th:text="${user.phoneNumber}"></span>
+								</li>
+							</ul>
+							<div class="row mt-40">
+								<div class="col-sm-3">
+									<form method="post" th:action="@{/user/delete/complete}">
+										<input type="hidden" name="id" th:value="${user.id}"/>
+										<input class="btn btn-round btn-b" type="submit" value="退会"/>
+									</form>
+								</div>
+								<div class="col-sm-3">
+									<form method="post" th:action="@{/user/detail/{id}(id=${user.id})}">
+										<input type="hidden" name="id" th:value="${user.id}"/>
+										<input class="btn btn-round btn-g" type="submit" value="戻る"/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>

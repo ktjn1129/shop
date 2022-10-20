@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout :: layout(~{::body/content()})}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>アカウント情報変更 | Shop</title>
+	</head>
+	<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+		<main>
+			<div class="main">
+				<!-- メインビジュアル -->
+				<section class="module bg-dark-30" data-background="">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-sm-offset-3">
+								<h1 class="module-title font-alt mb-0">Account</h1>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 会員詳細 -->
+				<section class="module">
+					<div class="container">
+						<div class="col-sm-6 col-sm-offset-3 mb-sm-40">
+							<h4 class="font-alt">アカウント情報</h4>
+							<hr class="divider-w mb-20">
+							<form method="post" th:action="@{/user/update/check}" th:object="${userForm}">
+								<ul class="list-unstyled">
+									<li class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+										<span>メールアドレス</span><br>
+										<input class="form-control" type="text" name="email" th:value="${user.email}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+										<span>パスワード</span><br>
+										<input class="form-control" type="password" name="password" th:value="${user.password}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-error'">
+										<span>氏名</span><br>
+										<input class="form-control" type="text" name="name" th:value="${user.name}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('postalCode')} ? 'has-error'">
+										<span>郵便番号</span><br>
+										<input class="form-control" type="text" name="postalCode" th:value="${user.postalCode}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+										<span>住所</span><br>
+										<input class="form-control" type="text" name="address" th:value="${user.address}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+									</li>
+									<li class="form-group" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'has-error'">
+										<span>電話番号</span><br>
+										<input class="form-control" type="text" name="phoneNumber" th:value="${user.phoneNumber}"/>
+										<span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+									</li>
+								</ul>
+								<input type="hidden" name="id" th:value="${user.id}"/>
+								<input type="hidden" name="backflg" value="false"/>
+								<div class="col-sm-3 mt-20">
+									<input class="btn btn-round btn-b" type="submit" value="確認"/>
+								</div>
+							</form>
+							<div class="col-sm-3 mt-20">
+								<form method="post" th:action="@{/user/detail/{id}(id=${user.id})}">
+									<input type="hidden" name="id" th:value="${user.id}"/>
+									<input class="btn btn-round btn-g" type="submit" value="戻る"/>
+								</form>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</body>
+</html>
