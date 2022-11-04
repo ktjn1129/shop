@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,6 @@ import com.example.demo.repository.ItemDao;
  * 
  * @author koto
  */
-@Transactional
 @Service
 public class ItemService {
 
@@ -65,7 +64,7 @@ public class ItemService {
 	 * @param pagination ページング情報
 	 * @return dao.findAll(pagination) 商品情報
 	 */
-	public List<Item> findAll(HashMap<String, String> pagination) {
+	public List<Item> findAll(Map<String, String> pagination) {
 		
 		return dao.findAll(pagination);
 	}
@@ -73,54 +72,54 @@ public class ItemService {
 	/**
 	 * 商品新着順検索メソッド
 	 * 
-	 * @return dao.findByOrderByInsertDateDesc() 商品情報
+	 * @return dao.SortByNewestToOldest() 商品情報
 	 */
-	public List<Item> findByOrderByInsertDateDesc() {
+	public List<Item> SortByNewestToOldest() {
 		
-		return dao.findByOrderByInsertDateDesc();
+		return dao.SortByNewestToOldest();
 	}
 	
 	/**
 	 * 商品新着順検索メソッド
 	 * 
 	 * @param pagination ページング情報
-	 * @return dao.findByOrderByInsertDateDesc(pagination) 商品情報
+	 * @return dao.SortByNewestToOldest(pagination) 商品情報
 	 */
-	public List<Item> findByOrderByInsertDateDesc(HashMap<String, String> pagination) {
+	public List<Item> SortByNewestToOldest(Map<String, String> pagination) {
 		
-		return dao.findByOrderByInsertDateDesc(pagination);
+		return dao.SortByNewestToOldest(pagination);
 	}
 	
 	/**
 	 * 商品売人気順検索メソッド
 	 * 
-	 * @return dao.findByOrderByOrderItemListSizeDesc() 商品情報
+	 * @return dao.SortByPopularity() 商品情報
 	 */
-	public List<Item> findByOrderByOrderItemListSizeDesc() {
+	public List<Item> SortByPopularity() {
 		
-		return dao.findByOrderByOrderItemListSizeDesc();
+		return dao.SortByPopularity();
 	}
 	
 	/**
 	 * 商品売人気順検索メソッド
 	 * 
 	 * @param pagination ページング情報
-	 * @return dao.findByOrderByOrderItemListSizeDesc(pagination) 商品情報
+	 * @return dao.SortByPopularity(pagination) 商品情報
 	 */
-	public List<Item> findByOrderByOrderItemListSizeDesc(HashMap<String, String> pagination) {
+	public List<Item> SortByPopularity(Map<String, String> pagination) {
 		
-		return dao.findByOrderByOrderItemListSizeDesc(pagination);
+		return dao.SortByPopularity(pagination);
 	}
 	
 	/**
 	 * 商品新着順+カテゴリ別検索メソッド
 	 * 
 	 * @param categoryId カテゴリーID
-	 * @return dao.findByCategoryIdOrderByInsertDateDesc(categoryId) 商品情報
+	 * @return dao.findByCategoryIdSortByNewestToOldest(categoryId) 商品情報
 	 */
-	public List<Item> findByCategoryIdOrderByInsertDateDesc(int categoryId) {
+	public List<Item> findByCategoryIdSortByNewestToOldest(int categoryId) {
 	
-		return dao.findByCategoryIdOrderByInsertDateDesc(categoryId);
+		return dao.findByCategoryIdSortByNewestToOldest(categoryId);
 	}
 	
 	/**
@@ -128,22 +127,22 @@ public class ItemService {
 	 * 
 	 * @param pagination ページング情報
 	 * @param categoryId カテゴリーID
-	 * @return dao.findByCategoryIdOrderByInsertDateDesc(paginaiton, categoryId) 商品情報
+	 * @return dao.findByCategoryIdSortByNewestToOldest(paginaiton, categoryId) 商品情報
 	 */
-	public List<Item> findByCategoryIdOrderByInsertDateDesc(HashMap<String, String> pagination, int categoryId) {
+	public List<Item> findByCategoryIdSortByNewestToOldest(Map<String, String> pagination, int categoryId) {
 	
-		return dao.findByCategoryIdOrderByInsertDateDesc(pagination, categoryId);
+		return dao.findByCategoryIdSortByNewestToOldest(pagination, categoryId);
 	}
 	
 	/**
 	 * 商品人気順+カテゴリ別検索メソッド
 	 * 
 	 * @param categoryId カテゴリーID
-	 * @return dao.findByCategoryIdOrderByOrderItemListSizeDesc(categoryId) 商品情報
+	 * @return dao.findByCategoryIdSortByPopularity(categoryId) 商品情報
 	 */
-	public List<Item> findByCategoryIdOrderByOrderItemListSizeDesc(int categoryId) {
+	public List<Item> findByCategoryIdSortByPopularity(int categoryId) {
 		
-		return dao.findByCategoryIdOrderByOrderItemListSizeDesc(categoryId);
+		return dao.findByCategoryIdSortByPopularity(categoryId);
 	}
 	
 	/**
@@ -151,11 +150,11 @@ public class ItemService {
 	 * 
 	 * @param pagination ページング情報
 	 * @param categoryId カテゴリーID
-	 * @return dao.findByCategoryIdOrderByOrderItemListSizeDesc(pagination, categoryId) 商品情報
+	 * @return dao.findByCategoryIdSortByPopularity(pagination, categoryId) 商品情報
 	 */
-	public List<Item> findByCategoryIdOrderByOrderItemListSizeDesc(HashMap<String, String> pagination, int categoryId) {
+	public List<Item> findByCategoryIdSortByPopularity(Map<String, String> pagination, int categoryId) {
 		
-		return dao.findByCategoryIdOrderByOrderItemListSizeDesc(pagination, categoryId);
+		return dao.findByCategoryIdSortByPopularity(pagination, categoryId);
 	}
 	
 	/**
@@ -163,6 +162,7 @@ public class ItemService {
 	 * 
 	 * @param item 商品情報
 	 */
+	@Transactional
 	public void updateStock(Item item) {
 		
 		dao.updateStock(item);

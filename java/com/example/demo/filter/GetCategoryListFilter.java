@@ -21,14 +21,19 @@ import com.example.demo.service.CategoryService;
 @Component
 public class GetCategoryListFilter implements Filter{
 	
+	/**
+	 * カテゴリーリポジトリの紐付け
+	 */
 	@Autowired
 	CategoryService categoryService;
 
+	/**
+	 * カテゴリー情報取得メソッド
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		// カテゴリを全件検索し、Viewに渡す（カテゴリ別検索用）
 		request.setAttribute("categories", categoryService.findAll());
 			
 		chain.doFilter(request,  response);

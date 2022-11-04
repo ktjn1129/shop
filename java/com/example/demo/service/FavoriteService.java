@@ -7,34 +7,34 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.bean.LikeListBean;
-import com.example.demo.model.Like;
-import com.example.demo.repository.LikeDao;
+import com.example.demo.bean.FavoriteListBean;
+import com.example.demo.model.Favorite;
+import com.example.demo.repository.FavoriteDao;
 
 /**
  * お気に入り商品Serviceクラス
  * 
  * @author koto
  */
-@Transactional
 @Service
-public class LikeService {
+public class FavoriteService {
 	
 	/**
 	 * お気に入り商品Daoの紐付け
 	 */
 	@Autowired
-	@Qualifier("LikeDaoJdbc")
-	LikeDao dao;
+	@Qualifier("FavoriteDaoJdbc")
+	FavoriteDao dao;
 	
 	/**
 	 * お気に入り商品登録メソッド
 	 * 
-	 * @param like お気に入り商品情報
+	 * @param favorite お気に入り商品情報
 	 */
-	public void addLike(Like like) {
+	@Transactional
+	public void addFavorite(Favorite favorite) {
 		
-		dao.addLike(like);
+		dao.addFavorite(favorite);
 	}
 
 	/**
@@ -43,9 +43,10 @@ public class LikeService {
 	 * @param userId ユーザーID
 	 * @param itemId 商品ID
 	 */
-	public void removeLike(int userId, int itemId) {
+	@Transactional
+	public void removeFavorite(int userId, int itemId) {
 		
-		dao.removeLike(userId, itemId);
+		dao.removeFavorite(userId, itemId);
 	}
 	
 	/**
@@ -55,7 +56,7 @@ public class LikeService {
 	 * @param itemId 商品ID
 	 * @return dao.findByUserId(userId) お気に入りリスト
 	 */
-	public List<LikeListBean> findByUserId(int userId) {
+	public List<FavoriteListBean> findByUserId(int userId) {
 		
 		return dao.findByUserId(userId);
 	}

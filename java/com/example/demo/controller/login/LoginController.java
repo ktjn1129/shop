@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.login;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -36,14 +36,14 @@ public class LoginController {
 	HttpSession session;
 
 	/**
-	 * ログイン画面表示メソッド ※ログイン失敗時のリダイレクト処理にも使用
+	 * ログイン画面表示メソッド
 	 * 
 	 * @param form フォーム入力情報
 	 * @return "login" ログイン画面への遷移
 	 */
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String login(LoginForm form) {
-		
+
 		session.removeAttribute("user");
 		
 		return "login";
@@ -51,33 +51,49 @@ public class LoginController {
 
 	/**
 	 * ログイン実行メソッド
+	 * （ログイン状態はセッションで管理することとする）
 	 * 
 	 * @param form フォーム入力情報
 	 * @param result 入力チェックの結果
 	 * @param model ビューへの値渡し
-	 * @return login(form) ログイン画面へのリダイレクト
+	 * @return login(form) ログイン画面への遷移
 	 * @return "redirect:/" トップ画面へのリダイレクト
 	 */
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public String doLogin(@Valid @ModelAttribute LoginForm form, BindingResult result, Model model) {
 		
-		User user = userService.findByEmail(form.getEmail());
-		String password = user.getPassword();
-		Integer deleteFlag = user.getDeleteFlag();
+		User registeredUser = userService.findByEmail(form.getEmail());
 		String errMsg = "Eメールもしくはパスワードが正しくありません。";
 		
-		if (result.hasErrors() || user == null) {
+		if (result.hasErrors() || registeredUser == null) {
+			
 			model.addAttribute("error", errMsg);
+			
 			return login(form);
+			
+		} else if (form.getPassword().equals(registeredUser.getPassword()) && registeredUser.getDeleteFlag() == 0) {
+			
+			session.setAttribute("user", registeredUser);
+			
+			return "redirect:/";
+			
 		} else {
-			if (form.getPassword().equals(password) && deleteFlag == 0) {
-				session.setAttribute("user", user);
-				return "redirect:/";
-			} else {
-				// パスワードがDBと一致しないまたは削除フラグがtrueの場合
-				model.addAttribute("error", errMsg);
-				return login(form);
-			}
+			model.addAttribute("error", errMsg);
+			
+			return login(form);
 		}
+	}
+	
+	/**
+	 * ログアウト実行メソッド
+	 * 
+	 * @return "redirect:/login" ログイン画面へのリダイレクト
+	 */
+	@RequestMapping(path = "/logout", method = RequestMethod.GET)
+	public String doLogout() {
+		
+		session.invalidate();
+		
+		return "redirect:/login";
 	}
 }

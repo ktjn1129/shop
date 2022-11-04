@@ -15,6 +15,9 @@
 			</div>
 			<div class="collapse navbar-collapse" id="custom-collapse">
 				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown" th:if="${session.user != null}">
+						<a th:href="@{/user/detail}">ようこそ、<span th:text="${session.user.name}"></span> 様</a>
+					</li>
 					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Products</a>
 						<ul class="dropdown-menu">
 							<li><a th:href="@{/}">商品一覧</a></li>
@@ -26,9 +29,8 @@
 						<a class="dropdown-toggle" data-toggle="dropdown"><span class="icon-profile-male"></span></a>
 						<ul class="dropdown-menu" th:if="${session.user != null}">
 							<li><a th:href="@{/user/detail}">アカウント情報</a></li>
-							<li><a th:href="@{/like/list}">お気に入りリスト</a></li>
+							<li><a th:href="@{/favorite/list}">お気に入りリスト</a></li>
 							<li><a th:href="@{/order/list}">ご注文履歴</a></li>
-							<li><a th:href="@{/weather}">天気予報（京都府）</a></li>
 							<li><a th:href="@{/logout}">ログアウト</a></li>
 						</ul>
 					</li>

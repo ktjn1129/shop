@@ -11,18 +11,13 @@ import com.example.demo.model.User;
  */
 public interface UserDao {
 	
-	// IDを基にユーザー情報を取得
 	public User findById(int id) throws DataAccessException;
 	
-	// Emailを基にユーザー情報を取得
 	public User findByEmail(String email) throws DataAccessException;
 	
-	// ユーザー名を基にユーザー情報を取得
 	public User findByUsername(String username) throws DataAccessException;
 	
-	// ユーザーを新規登録
-	public void register(User user) throws DataAccessException;
+	public Integer regist(User user) throws DataAccessException;
 	
-	// ユーザー情報を更新
-	public void update(User user) throws DataAccessException;
+	public User update(User user) throws DataAccessException;
 }

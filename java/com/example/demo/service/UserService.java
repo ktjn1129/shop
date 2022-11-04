@@ -13,7 +13,6 @@ import com.example.demo.repository.UserDao;
  * 
  * @author koto
  */
-@Transactional
 @Service
 public class UserService {
 	
@@ -61,20 +60,23 @@ public class UserService {
 	 * ユーザー登録メソッド
 	 * 
 	 * @param user ユーザー情報
+	 * @return dao.regist(user) ユーザー情報
 	 */
-	public void register(User user) {
+	@Transactional
+	public Integer regist(User user) {
 		
-		dao.register(user);
+		return dao.regist(user);
 	}
 	
 	/**
 	 * ユーザー情報更新メソッド
 	 * 
 	 * @param user ユーザー情報
-	 * @param id ユーザーID
+	 * @return dao.update(user) ユーザー情報
 	 */
-	public void update(User user) {
+	@Transactional
+	public User update(User user) {
 		
-		dao.update(user);
+		return dao.update(user);
 	}
 }

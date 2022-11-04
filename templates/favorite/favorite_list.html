@@ -20,10 +20,10 @@
 						<hr class="divider-w pt-20">
 						<div class="row">
 							<div class="col-sm-12">
-								<div th:if="${#lists.isEmpty(likeList)}">
+								<div th:if="${#lists.isEmpty(favoriteList)}">
 									<h5>お客様のお気に入り商品はありません。</h5>
 								</div>
-								<table class="table table-striped table-border checkout-table" th:if="!${#lists.isEmpty(likeList)}">
+								<table class="table table-striped table-border checkout-table" th:if="!${#lists.isEmpty(favoriteList)}">
 									<tbody>
 										<tr>
 											<th></th>
@@ -31,25 +31,25 @@
 											<th>価格</th>
 											<th>お気に入りリストから削除</th>
 										</tr>
-										<tr th:each="likeItem: ${likeList}">
+										<tr th:each="favoriteItem: ${favoriteList}">
 											<td>
-												<a th:href="@{/item/detail/{itemId}(itemId=${likeItem.itemId})}">
-													<img th:src="@{/images/{image}(image=${likeItem.image})}" th:if="${likeItem.image} != null"/>
-													<img th:src="@{/images/no_image.jpg}" th:if="${likeItem.image} == null"/>
+												<a th:href="@{/item/detail/{itemId}(itemId=${favoriteItem.itemId})}">
+													<img th:src="@{/images/{image}(image=${favoriteItem.image})}" th:if="${favoriteItem.image} != null"/>
+													<img th:src="@{/images/no_image.jpg}" th:if="${favoriteItem.image} == null"/>
 												</a>
 											</td>
 											<td>
-												<a th:href="@{/item/detail/{itemId}(itemId=${likeItem.itemId})}">
- 													<h5 class="product-title font-alt" th:text="${likeItem.name}"></h5>
+												<a th:href="@{/item/detail/{itemId}(itemId=${favoriteItem.itemId})}">
+ 													<h5 class="product-title font-alt" th:text="${favoriteItem.name}"></h5>
 												</a>
 											</td>
 											<td>
-												<h5 class="product-title font-alt">&yen; <span th:text="${likeItem.price}"></span></h5>
+												<h5 class="product-title font-alt">&yen; <span th:text="${favoriteItem.price}"></span></h5>
 											</td>
 											<td class="col-sm-3">
 												<div class="col-sm-3">
-													<form method="post" th:action="@{/like/remove}">
-														<input type="hidden" name="itemId" th:value="${likeItem.itemId}" />
+													<form method="post" th:action="@{/favorite/remove}">
+														<input type="hidden" name="itemId" th:value="${favoriteItem.itemId}" />
 														<input type="submit" class="btn btn-border-d btn btn-xs" value="削除" />
 													</form>
 												</div>
