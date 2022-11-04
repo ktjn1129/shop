@@ -72,57 +72,57 @@
 						<div class="row">
 							<nav class="col-sm-12">
 								<ul class="pagination font-alt" th:if="${selectedSort == null}">
-									<li th:if="${firstPage} > 1" class="page-item ">
+									<li th:if="${page.get('firstPage')} > 1" class="page-item ">
 										<a class="page-link" th:href="@{?page = 1}" tabindex="-2">&laquo;</a>
 									</li>
-									<li th:if="${page} > 1" class="page-item ">
-										<a class="page-link" th:href="@{'?page=' + ${page - 1}}" tabindex="-1">前へ</a>
+									<li th:if="${page.get('currPage')} > 1" class="page-item ">
+										<a class="page-link" th:href="@{'?page=' + ${page.get('currPage') -1}}" tabindex="-1">前へ</a>
 									</li>
-									<th:block th:if="${lastPage} <= 0">
-										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${firstPage}">
+									<th:block th:if="${page.get('lastPage')} <= 0">
+										<li class="page-item " th:classappend="${i == page.get('currPage')} ? active" th:each="i : ${page.get('firstPage')}">
 											<a class="page-link" th:href="@{'?page=' + ${i}}" th:text="${i}"></a>
 										</li>
 									</th:block>
-									<th:block th:if="${lastPage} > 0">
-										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${#numbers.sequence(firstPage, lastPage)}">
+									<th:block th:if="${page.get('lastPage')} > 0">
+										<li class="page-item " th:classappend="${i == page.get('currPage')} ? active" th:each="i : ${#numbers.sequence(page.get('firstPage'), page.get('lastPage'))}">
 											<a class="page-link" th:href="@{'?page=' + ${i}}" th:text="${i}"></a>
 										</li>
 									</th:block>
-									<li th:if="${page} < ${totalPage}" class="page-item ">
-										<a class="page-link" th:href="@{'?page=' + ${page + 1}}">次へ</a>
+									<li th:if="${page.get('currPage')} < ${page.get('totalPage')}" class="page-item ">
+										<a class="page-link" th:href="@{'?page=' + ${page.get('currPage') +1}}">次へ</a>
 									</li>
-									<li th:if="${lastPage} < ${totalPage}" class="page-item ">
-										<a class="page-link" th:href="@{'?page=' + ${totalPage}}">&raquo;</a>
+									<li th:if="${page.get('lastPage')} < ${page.get('totalPage')}" class="page-item ">
+										<a class="page-link" th:href="@{'?page=' + ${page.get('totalPage')}}">&raquo;</a>
 									</li>
 								</ul>
 								<ul class="pagination font-alt" th:if="${selectedSort != null}">
-									<li th:if="${firstPage} > 1" class="page-item ">
+									<li th:if="${page.get('firstPage')} > 1" class="page-item ">
 										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
 										 + '&categoryId=' + ${selectedCategory} + '&page = 1'}" tabindex="-2">&laquo;</a>
 									</li>
-									<li th:if="${page} > 1" class="page-item ">
+									<li th:if="${page.get('currPage')} > 1" class="page-item ">
 										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
-										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page - 1}}" tabindex="-1">前へ</a>
+										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page.get('currPage') -1}}" tabindex="-1">前へ</a>
 									</li>
-									<th:block th:if="${lastPage} <= 0">
-										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${firstPage}">
+									<th:block th:if="${page.get('lastPage')} <= 0">
+										<li class="page-item " th:classappend="${i == page.get('currPage')} ? active" th:each="i : ${page.get('firstPage')}">
 											<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
 											 + '&categoryId=' + ${selectedCategory} + '&page=' + ${i}}" th:text="${i}"></a>
 										</li>
 									</th:block>
-									<th:block th:if="${lastPage} > 0">
-										<li class="page-item " th:classappend="${i == page} ? active" th:each="i : ${#numbers.sequence(firstPage, lastPage)}">
+									<th:block th:if="${page.get('lastPage')} > 0">
+										<li class="page-item " th:classappend="${i == page.get('currPage')} ? active" th:each="i : ${#numbers.sequence(page.get('firstPage'), page.get('lastPage'))}">
 											<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
 											 + '&categoryId=' + ${selectedCategory} + '&page=' + ${i}}" th:text="${i}"></a>
 										</li>
 									</th:block>
-									<li th:if="${page} < ${totalPage}" class="page-item ">
+									<li th:if="${page.get('currPage')} < ${page.get('totalPage')}" class="page-item ">
 										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
-										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page + 1}}">次へ</a>
+										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page.get('currPage') +1}}">次へ</a>
 									</li>
-									<li th:if="${lastPage} < ${totalPage}" class="page-item ">
+									<li th:if="${page.get('lastPage')} < ${page.get('totalPage')}" class="page-item ">
 										<a class="page-link" th:href="@{'list?sortType=' + ${selectedSort}
-										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${totalPage}}">&raquo;</a>
+										 + '&categoryId=' + ${selectedCategory} + '&page=' + ${page.get('totalPage')}}">&raquo;</a>
 									</li>
 								</ul>
 							</nav>

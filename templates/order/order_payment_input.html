@@ -31,20 +31,9 @@
 					  				<li th:each="err : ${#fields.errors('*')}" th:text="${err}" style="color: red"></li>
 								</ul>
 								<ul class="list-unstyled mb-40">
-									<li>
-										<label><input type="radio" name="payMethod" value="1" checked />クレジットカード</label>
-									</li>
-									<li>
-										<label><input type="radio" name="payMethod" value="2" />銀行振込</label>
-									</li>
-									<li>
-										<label><input type="radio" name="payMethod" value="3" />着払い</label>
-									</li>
-									<li>
-										<label><input type="radio" name="payMethod" value="4" />電子マネー</label>
-									</li>
-									<li>
-										<label><input type="radio" name="payMethod" value="5" />コンビニ決済</label>
+									<li th:each="payMethod : ${payMethodList}">
+										<input type="radio" name="payMethod" th:value="${payMethod.value}" th:checked="${payMethod.value == 1}"/>
+										<label th:text="${payMethod.name}"></label>
 									</li>
 								</ul>
 								<input type="hidden" name="postalCode" th:value="${addressForm.postalCode}"/>
@@ -56,12 +45,11 @@
 								</div>
 							</form>
 							<div class="col-sm-3">
-								<form th:action="@{/address/input}">
+								<form th:action="@{/address/input/back}">
 									<input type="hidden" name="postalCode" th:value="${addressForm.postalCode}" />
 									<input type="hidden" name="address" th:value="${addressForm.address}" />
 									<input type="hidden" name="name" th:value="${addressForm.name}" />
 									<input type="hidden" name="phoneNumber" th:value="${addressForm.phoneNumber}" />
-									<input type="hidden" name="backFlg" value="true" />
 									<input class="btn btn-round btn-g" type="submit" value="戻る"/>
 								</form>
 							</div>

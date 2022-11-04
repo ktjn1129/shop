@@ -1,5 +1,7 @@
 package com.example.demo.bean;
 
+import javax.persistence.Id;
+
 import lombok.Data;
 
 /**
@@ -9,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class BasketBean {
-	
+	@Id
 	private Integer id;
 	
 	private String name;

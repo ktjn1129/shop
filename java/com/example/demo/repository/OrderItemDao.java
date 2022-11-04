@@ -14,9 +14,7 @@ import com.example.demo.model.OrderItem;
  */
 public interface OrderItemDao {
 	
-	// 注文商品情報を新規登録
-	public void register(OrderItem orderItem) throws DataAccessException;
+	public void regist(OrderItem orderItem) throws DataAccessException;
 	
-	// 注文IDを基に注文商品情報を取得
 	public List<OrderDetailBean> findByOrderId(int orderId) throws DataAccessException;
 }

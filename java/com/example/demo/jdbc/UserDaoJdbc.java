@@ -34,13 +34,12 @@ public class UserDaoJdbc implements UserDao {
 	 */
 	@Override
 	public User findById(int id) throws DataAccessException {
-		//　SQL文を定義
+		
 		String sql = "SELECT * FROM users" + " WHERE id = ?";
-		// クエリを実行しユーザー情報を取得
+		
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql, id);
-		// Userインスタンスを生成
+		
 		User user = new User();
-		// 取得したユーザー情報をセット
 		user.setId((Integer) map.get("id"));
 		user.setEmail((String) map.get("email"));
 		user.setPassword((String) map.get("password"));
@@ -64,15 +63,12 @@ public class UserDaoJdbc implements UserDao {
 	 */
 	@Override
 	public User findByEmail(String email) throws DataAccessException {
-		//　SQL文を定義
+		
 		String sql = "SELECT * FROM users" + " WHERE email = ?";
 		
 		try {
-			// クエリを実行しユーザー情報を取得
 			Map<String, Object> map = jdbcTemplate.queryForMap(sql, email);
-			// Userインスタンスを生成
 			User user = new User();
-			// 取得したユーザー情報をセット
 			user.setId((Integer) map.get("id"));
 			user.setEmail((String) map.get("email"));
 			user.setPassword((String) map.get("password"));
@@ -88,6 +84,7 @@ public class UserDaoJdbc implements UserDao {
 			return user;
 			
 		} catch (EmptyResultDataAccessException e) {
+			
 			return null;
 		}
 	}
@@ -100,15 +97,12 @@ public class UserDaoJdbc implements UserDao {
 	 */
 	@Override
 	public User findByUsername(String username) throws DataAccessException {
-		//　SQL文を定義
+		
 		String sql = "SELECT * FROM users" + " WHERE username = ?";
 		
 		try {
-			// クエリを実行しユーザー情報を取得
 			Map<String, Object> map = jdbcTemplate.queryForMap(sql, username);
-			// Userインスタンスを生成
 			User user = new User();
-			// 取得したユーザー情報をセット
 			user.setId((Integer) map.get("id"));
 			user.setEmail((String) map.get("email"));
 			user.setPassword((String) map.get("password"));
@@ -124,6 +118,7 @@ public class UserDaoJdbc implements UserDao {
 			return user;
 			
 		} catch (EmptyResultDataAccessException e) {
+			
 			return null;
 		}
 	}
@@ -134,12 +129,12 @@ public class UserDaoJdbc implements UserDao {
 	 * @param user ユーザー情報
 	 */
 	@Override
-	public void register(User user) throws DataAccessException {
-		//　SQL文を定義
+	public Integer regist(User user) throws DataAccessException {
+		
 		String sql = "INSERT INTO users (email, password, name, postal_code, address,"
 					+ " phone_number, authority, delete_flag, insert_date, username)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		// クエリを実行
+		
 		jdbcTemplate.update(sql
 							,user.getEmail()
 							,user.getPassword()
@@ -151,6 +146,10 @@ public class UserDaoJdbc implements UserDao {
 							,user.getDeleteFlag()
 							,user.getInsertDate()
 							,user.getUsername());
+		
+		Integer userId = jdbcTemplate.queryForObject("SELECT last_insert_id()", Integer.class);
+		
+		return userId;
 	}
 
 	/**
@@ -160,13 +159,13 @@ public class UserDaoJdbc implements UserDao {
 	 * @param id ユーザーID
 	 */
 	@Override
-	public void update(User user) throws DataAccessException {
-		// SQL文を定義
+	public User update(User user) throws DataAccessException {
+		
 		String sql = "UPDATE users SET"
 					+ " email = ?, password = ?, name = ?, postal_code = ?, address = ?,"
 					+ " phone_number = ?, authority = ?, delete_flag = ?, insert_date = ?, username = ?"
 					+ " WHERE id = ?";
-		// クエリを実行
+		
 		jdbcTemplate.update(sql
 							,user.getEmail()
 							,user.getPassword()
@@ -179,5 +178,7 @@ public class UserDaoJdbc implements UserDao {
 							,user.getInsertDate()
 							,user.getUsername()
 							,user.getId());
+		
+		return user;
 	}
 }

@@ -13,6 +13,5 @@ import com.example.demo.model.Category;
  */
 public interface CategoryDao {
 
-	// カテゴリー情報を全件取得
 	public List<Category> findAll() throws DataAccessException;
 }

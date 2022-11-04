@@ -4,11 +4,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import lombok.Data;
+
 /**
  * お届け先情報フォーム
  * 
  * @author koto
  */
+@Data
 public class AddressForm {
 	
 	@NotBlank
@@ -28,39 +31,4 @@ public class AddressForm {
 	@Size(min = 10, max = 11)
 	@Pattern(regexp = "^[0-9]+$")
 	private String phoneNumber;
-	
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	
-
 }

@@ -16,7 +16,6 @@ import com.example.demo.repository.OrderItemDao;
  * 
  * @author koto
  */
-@Transactional
 @Service
 public class OrderItemService {
 	
@@ -32,9 +31,10 @@ public class OrderItemService {
 	 * 
 	 * @param orderItem 注文商品情報
 	 */
-	public void register(OrderItem orderItem) {
+	@Transactional
+	public void regist(OrderItem orderItem) {
 		
-		dao.register(orderItem);
+		dao.regist(orderItem);
 	}
 	
 	/**

@@ -34,21 +34,17 @@ public class CategoryDaoJdbc implements CategoryDao{
 	 */
 	@Override
 	public List<Category> findAll() throws DataAccessException {
-		// クエリを実行し商品情報を取得
+
 		List<Map<String,Object>> getList = jdbcTemplate.queryForList("SELECT * FROM categories");
-		// 返却用の商品リストを生成
 		List<Category> categoryList = new ArrayList<>();
 		
 		for(Map<String, Object> map : getList) {
-			// Categoryインスタンスを生成
 			Category category = new Category();
-			// 取得した商品情報をセット
 			category.setId((Integer) map.get("id"));
 			category.setName((String) map.get("name"));
 			category.setDescription((String) map.get("description"));
 			category.setDeleteFlag((Boolean) map.get("delete_flag"));
 			category.setInsertDate((LocalDateTime) map.get("insert_date"));
-			// カテゴリーリストに追加
 			categoryList.add(category);
 		}
 		return categoryList;

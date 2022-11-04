@@ -5,12 +5,12 @@ import javax.persistence.Id;
 import lombok.Data;
 
 /**
- * お気に入り商品Model
+ * お気に入り情報
  * 
  * @author koto
  */
 @Data
-public class Like {
+public class Favorite {
 	@Id
 	private Integer id;
 	

@@ -8,7 +8,7 @@ import lombok.Data;
  * @author koto
  */
 @Data
-public class LikeListBean {
+public class FavoriteListBean {
 	
 	private Integer itemId;
 	

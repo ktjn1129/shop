@@ -40,7 +40,7 @@
 								<div class="row mb-40">
 									<div class="col-sm-8">
 										<div class="mb-10" th:if="${session.user != null}">
-											<form method="post" th:action="@{/like/add}">
+											<form method="post" th:action="@{/favorite/add}">
 												<input type="hidden" name="id" th:value="${item.id}" />
 												<input class="btn btn-lg btn-block btn-round btn-g" type="submit" value="お気に入りに追加">
 											</form>
